@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Matcher AI Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .project-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .project-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .card-image {
+            height: 180px;
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            opacity: 0.2;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .card-image i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .card-content {
+            padding: 24px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #f8fafc;
+            transition: color 0.3s;
+        }
+
+        .project-card:hover .card-title {
+            color: #3b82f6;
+        }
+
+        .card-description {
+            color: #94a3b8;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .tag {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 24px;
+            font-weight: 500;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #cbd5e1;
+            border: 1px solid #475569;
+        }
+
+        .btn-secondary:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .external-link {
+            color: #64748b;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .project-card:hover .external-link {
+            color: #3b82f6;
+        }
+
+        .hover-effect {
+            position: absolute;
+            inset: 0;
+            border: 2px solid #3b82f6;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .project-card:hover .hover-effect {
+            opacity: 0.3;
+        }
+
+        .instructions {
+            max-width: 400px;
+            margin-top: 40px;
+            padding: 20px;
+            background: #1e293b;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #3b82f6;
+        }
+
+        .instructions p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="project-card" id="bookMatcherCard">
+        <div class="featured-badge">Featured</div>
+        
+        <div class="card-image">
+            <i class="fas fa-code"></i>
+        </div>
+        
+        <div class="card-content">
+            <h2 class="card-title">Book Matcher AI</h2>
+            <p class="card-description">An AI-powered tool that recommends books based on user preferences.</p>
+            
+            <div class="tags">
+                <span class="tag">AI/ML</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Tailwind</span>
+                <span class="tag">Vercel</span>
+            </div>
+            
+            <div class="card-actions">
+                <div class="buttons">
+                    <a href="https://book-matcher-ai.vercel.app/" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="btn btn-primary">
+                        <i class="fas fa-eye"></i>
+                        Live Demo
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-code-branch"></i>
+                        Code
+                    </a>
+                </div>
+                <div class="external-link">
+                    <i class="fas fa-external-link-alt"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hover-effect"></div>
+    </div>
+
+    <div class="instructions">
+        <h3>Implementation Details</h3>
+        <p>This card opens the Book Matcher AI project in a new tab when clicking the "Live Demo" button. The link uses <code>target="_blank"</code> and <code>rel="noopener noreferrer"</code> for security best practices.</p>
+        <p>The entire card is clickable (JavaScript enabled) - click anywhere to open the project.</p>
+    </div>
+
+    <script>
+        document.getElementById('bookMatcherCard').addEventListener('click', function(e) {
+            // Don't open if user clicked on a button (buttons have their own handlers)
+            if (e.target.tagName === 'A' || e.target.closest('a')) {
+                return;
+            }
+            window.open('https://book-matcher-ai.vercel.app/', '_blank', 'noopener,noreferrer');
+        });
+
+        // Add keyboard accessibility
+        document.getElementById('bookMatcherCard').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                window.open('https://book-matcher-ai.vercel.app/', '_blank', 'noopener,noreferrer');
+            }
+        });
+
+        // Set tabindex for accessibility
+        document.getElementById('bookMatcherCard').setAttribute('tabindex', '0');
+        document.getElementById('bookMatcherCard').setAttribute('role', 'button');
+    </script>
+</body>
+</html>

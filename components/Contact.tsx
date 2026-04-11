@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Send, Mail, MapPin, Phone, Globe, MessageSquare, Share2, GitBranch, MessageCircle } from "lucide-react";
+import { Send, Mail, MapPin, Globe, MessageSquare, Share2, GitBranch, MessageCircle } from "lucide-react";
 
 export default function Contact() {
   const ref = useRef(null);
@@ -58,7 +58,6 @@ export default function Contact() {
 
   const contactInfo = [
     { icon: <Mail size={20} />, label: "Email", value: "sakshamguptaa@gmail.com", link: "mailto:sakshamguptaa@gmail.com" },
-    { icon: <Phone size={20} />, label: "Phone", value: "9084458889", link: "tel:9084458889" },
     { icon: <MapPin size={20} />, label: "Location", value: "Noida, UP", link: "#" },
     { icon: <MessageCircle size={20} />, label: "WhatsApp", value: "Chat on WhatsApp", link: "https://wa.me/919084458889?text=Hello%20Saksham" },
   ];

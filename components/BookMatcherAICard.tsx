@@ -16,7 +16,7 @@ export default function BookMatcherAICard({
     description: "An AI-powered tool that recommends books based on user preferences.",
     tags: ["AI/ML", "Next.js", "TypeScript", "Tailwind", "Vercel"],
     imageColor: "from-red-500 to-orange-500",
-    liveUrl: "https://book-matcher-ai.vercel.app/",
+    liveUrl: "https://book-matcher-ai-git-main-saksham-gupta-tech17s-projects.vercel.app/",
     githubUrl: "#",
     featured: true,
   };

@@ -67,7 +67,7 @@ const filters = ["All", "Featured", "Frontend", "Fullstack", "Mobile", "Design"]
 
 export default function Projects() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
   const [activeFilter, setActiveFilter] = useState("All");
 
   const containerVariants = {

@@ -64,7 +64,7 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
@@ -86,7 +86,7 @@ export default function About() {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, margin: "-50px" }}
             className="space-y-8"
           >
             <motion.div variants={itemVariants} className="relative">
@@ -126,7 +126,7 @@ export default function About() {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, margin: "-50px" }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-6"
           >
             {philosophyItems.map((item, index) => (
@@ -153,7 +153,7 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ delay: 0.8 }}
           className="mt-20 text-center max-w-3xl mx-auto"
         >

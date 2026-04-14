@@ -2,12 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Target, Heart, Zap, Eye } from "lucide-react";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
 
 export default function About() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
 
   const philosophyItems = [
     {
@@ -56,19 +52,26 @@ export default function About() {
   };
 
   return (
-    <section id="about" ref={ref} className="py-24 px-6 bg-gradient-to-b from-background to-card">
+    <section id="about" className="relative py-24 px-6 bg-gradient-to-b from-background to-card overflow-hidden">
+      {/* Subtle background glassmorphism / gradient blobs */}
+      <div className="absolute inset-0 -z-10 pointer-events-none">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-primary/10 rounded-full blur-[80px]" />
+        <div className="absolute bottom-10 right-10 w-72 h-72 bg-secondary/10 rounded-full blur-[80px]" />
+      </div>
+
       <div className="container mx-auto max-w-6xl">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             My Philosophy
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
             Design with <span className="text-primary">Intention</span>,<br />
             Build with <span className="text-secondary">Precision</span>
           </h2>
@@ -77,17 +80,18 @@ export default function About() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left column - Visual storytelling */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
             className="space-y-8"
           >
             <motion.div variants={itemVariants} className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-3xl blur-xl"></div>
-              <div className="relative bg-card border border-border rounded-2xl p-8">
+              <div className="relative bg-card/60 backdrop-blur-xl border border-border/50 rounded-2xl p-8">
                 <h3 className="text-2xl font-bold mb-4">My Journey</h3>
                 <p className="text-muted mb-6">
                   Starting as a self‑taught designer, I've spent over three years bridging the gap between aesthetics and functionality.
@@ -106,11 +110,11 @@ export default function About() {
             </motion.div>
 
             <motion.div variants={itemVariants} className="grid grid-cols-2 gap-4">
-              <div className="bg-card border border-border rounded-2xl p-6">
+              <div className="bg-card/60 backdrop-blur-xl border border-border/50 rounded-2xl p-6">
                 <div className="text-3xl font-bold text-primary">10+</div>
                 <div className="text-sm text-muted mt-2">Projects Delivered</div>
               </div>
-              <div className="bg-card border border-border rounded-2xl p-6">
+              <div className="bg-card/60 backdrop-blur-xl border border-border/50 rounded-2xl p-6">
                 <div className="text-3xl font-bold text-secondary">30+</div>
                 <div className="text-sm text-muted mt-2">Happy Clients</div>
               </div>
@@ -121,7 +125,8 @@ export default function About() {
           <motion.div
             variants={containerVariants}
             initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
             className="grid grid-cols-1 sm:grid-cols-2 gap-6"
           >
             {philosophyItems.map((item, index) => (
@@ -129,7 +134,7 @@ export default function About() {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="bg-card border border-border rounded-2xl p-6 hover:border-primary/30 transition-all group"
+                className="bg-card/60 backdrop-blur-xl border border-border/50 rounded-2xl p-6 hover:border-primary/50 transition-all group"
               >
                 <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${item.color} mb-4`}>
                   <div className="text-white">{item.icon}</div>
@@ -147,11 +152,12 @@ export default function About() {
         {/* Quote */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ delay: 0.8 }}
           className="mt-20 text-center max-w-3xl mx-auto"
         >
-          <div className="text-2xl md:text-3xl font-light italic text-muted mb-6">
+          <div className="text-xl md:text-2xl lg:text-3xl font-light italic text-muted mb-6">
             "Good design is as little design as possible. Less, but better."
           </div>
           <div className="text-sm text-muted">— Dieter Rams</div>

@@ -16,13 +16,14 @@ const projects = [
     featured: true,
   },
   {
-    title: "Nexus Design System",
-    description: "A comprehensive design system with React components, documentation, and Figma library for consistent UI development.",
-    tags: ["React", "TypeScript", "Figma", "Storybook", "Tailwind"],
-    imageColor: "from-blue-500 to-cyan-500",
+    title: "LocalMind",
+    description: "A Privacy-First AI Knowledge Retrieval System. Built a full-stack RAG (Retrieval-Augmented Generation) platform that allows users to chat with their private PDF documents. It uses a sliding-window chunking strategy to ground LLM responses in local context, preventing hallucinations.",
+    tags: ["React", "Node.js", "Tailwind CSS", "Gemini AI", "Framer Motion"],
+    imageColor: "from-purple-500 to-indigo-500",
     liveUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/Saksham-gupta-tech17/local_mind",
     featured: true,
+    aiPowered: true,
   },
   {
     title: "EcoTrack Dashboard",
@@ -171,8 +172,17 @@ export default function Projects() {
 
               {/* Content */}
               <div className="p-6">
-                <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+                <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors flex items-center gap-3">
                   {project.title}
+                  {project.aiPowered && (
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-500 text-xs font-medium border border-purple-500/20">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                      </span>
+                      AI Powered
+                    </span>
+                  )}
                 </h3>
                 <p className="text-muted mb-5">
                   {project.description}

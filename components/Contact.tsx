@@ -57,7 +57,7 @@ export default function Contact() {
   ];
 
   const contactInfo = [
-    { icon: <Mail size={20} />, label: "Email", value: "sakshamguptaa@gmail.com", link: "mailto:sakshamguptaa@gmail.com" },
+    { icon: <Mail size={20} />, label: "Email", value: "sakshamguptaa17@gmail.com", link: "mailto:sakshamguptaa17@gmail.com" },
     { icon: <MapPin size={20} />, label: "Location", value: "Noida, UP", link: "#" },
     { icon: <MessageCircle size={20} />, label: "WhatsApp", value: "Chat on WhatsApp", link: "https://wa.me/919084458889?text=Hello%20Saksham" },
   ];
@@ -248,7 +248,7 @@ export default function Contact() {
             "The best way to predict the future is to create it."
           </p>
           <a
-            href="mailto:sakshamguptaa@gmail.com"
+            href="mailto:sakshamguptaa17@gmail.com"
             className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-primary-dark transition-colors shadow-lg hover:shadow-xl"
           >
             <Mail size={20} />

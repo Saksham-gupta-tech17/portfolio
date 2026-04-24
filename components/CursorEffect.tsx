@@ -1,16 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CursorEffect() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [cursorVariant, setCursorVariant] = useState("default");
+// ... the rest of your code
   const [isVisible, setIsVisible] = useState(false);
+  const [isInteractive, setIsInteractive] = useState(false);
+
+  // Use Framer Motion values for high performance (bypasses React render cycle)
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const dotX = useSpring(cursorX, { stiffness: 800, damping: 30, mass: 0.5 });
+  const dotY = useSpring(cursorY, { stiffness: 800, damping: 30, mass: 0.5 });
+
+  const ringX = useSpring(cursorX, { stiffness: 150, damping: 20, mass: 0.5 });
+  const ringY = useSpring(cursorY, { stiffness: 150, damping: 20, mass: 0.5 });
 
   useEffect(() => {
     const mouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
 
@@ -26,8 +37,8 @@ export default function CursorEffect() {
       "a, button, input, textarea, [role='button']"
     );
 
-    const handleMouseOver = () => setCursorVariant("interactive");
-    const handleMouseOut = () => setCursorVariant("default");
+    const handleMouseOver = () => setIsInteractive(true);
+    const handleMouseOut = () => setIsInteractive(false);
 
     interactiveElements.forEach((el) => {
       el.addEventListener("mouseover", handleMouseOver);
@@ -43,24 +54,7 @@ export default function CursorEffect() {
         el.removeEventListener("mouseout", handleMouseOut);
       });
     };
-  }, [isVisible]);
-
-  const variants = {
-    default: {
-      x: mousePosition.x - 8,
-      y: mousePosition.y - 8,
-      height: 16,
-      width: 16,
-      mixBlendMode: "difference" as const,
-    },
-    interactive: {
-      x: mousePosition.x - 20,
-      y: mousePosition.y - 20,
-      height: 40,
-      width: 40,
-      mixBlendMode: "difference" as const,
-    },
-  };
+  }, [isVisible, cursorX, cursorY]);
 
   if (!isVisible) return null;
 
@@ -68,20 +62,23 @@ export default function CursorEffect() {
     <>
       {/* Main cursor dot */}
       <motion.div
-        className="fixed top-0 left-0 z-50 rounded-full bg-white pointer-events-none"
-        variants={variants}
-        animate={cursorVariant}
-        transition={{ type: "spring", mass: 0.5 }}
+        className="fixed top-0 left-0 z-[100] rounded-full bg-white pointer-events-none mix-blend-difference"
+        style={{ x: dotX, y: dotY, translateX: "-50%", translateY: "-50%" }}
+        animate={{
+          width: isInteractive ? 4 : 12,
+          height: isInteractive ? 4 : 12,
+          opacity: isInteractive ? 0 : 1,
+        }}
       />
       {/* Outer ring */}
       <motion.div
-        className="fixed top-0 left-0 z-40 rounded-full border border-white/30 pointer-events-none"
+        className="fixed top-0 left-0 z-[99] rounded-full border border-white pointer-events-none mix-blend-difference"
+        style={{ x: ringX, y: ringY, translateX: "-50%", translateY: "-50%" }}
         animate={{
-          x: mousePosition.x - 24,
-          y: mousePosition.y - 24,
+          width: isInteractive ? 60 : 40,
+          height: isInteractive ? 60 : 40,
+          backgroundColor: isInteractive ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0)",
         }}
-        transition={{ type: "spring", mass: 0.3, delay: 0.05 }}
-        style={{ width: 48, height: 48 }}
       />
     </>
   );

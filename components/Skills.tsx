@@ -1,219 +1,139 @@
 "use client";
-
 import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
 import { 
-  Code, 
-  Palette, 
-  Database, 
-  Cpu, 
-  Globe, 
-  Smartphone,
-  GitBranch,
-  Cloud,
-  Terminal,
-  Layers
+  Code, Palette, Database, GitBranch, 
+  Smartphone, Cpu, Globe, Cloud, Terminal, Layers 
 } from "lucide-react";
 
 const skillCategories = [
   {
-    title: "Frontend Development",
-    icon: <Code className="w-5 h-5" />,
+    title: "Frontend",
+    icon: <Code size={18} />,
+    color: "blue",
     skills: [
       { name: "React", level: 95 },
       { name: "Next.js", level: 90 },
       { name: "TypeScript", level: 88 },
       { name: "Tailwind CSS", level: 92 },
-      { name: "Framer Motion", level: 85 },
     ],
-    color: "from-blue-500 to-cyan-500",
   },
   {
     title: "UI/UX Design",
-    icon: <Palette className="w-5 h-5" />,
+    icon: <Palette size={18} />,
+    color: "pink",
     skills: [
       { name: "Figma", level: 90 },
       { name: "Adobe XD", level: 80 },
       { name: "User Research", level: 75 },
       { name: "Prototyping", level: 85 },
-      { name: "Design Systems", level: 82 },
     ],
-    color: "from-purple-500 to-pink-500",
   },
   {
     title: "Backend & DevOps",
-    icon: <Database className="w-5 h-5" />,
+    icon: <Database size={18} />,
+    color: "green",
     skills: [
       { name: "Node.js", level: 85 },
       { name: "PostgreSQL", level: 80 },
       { name: "MongoDB", level: 78 },
-      { name: "Docker", level: 75 },
       { name: "AWS", level: 70 },
     ],
-    color: "from-green-500 to-emerald-500",
   },
   {
     title: "Tools & Workflow",
-    icon: <GitBranch className="w-5 h-5" />,
+    icon: <GitBranch size={18} />,
+    color: "orange",
     skills: [
       { name: "Git & GitHub", level: 92 },
       { name: "VS Code", level: 95 },
-      { name: "Jira", level: 80 },
       { name: "Webpack", level: 75 },
       { name: "CI/CD", level: 78 },
     ],
-    color: "from-orange-500 to-amber-500",
   },
 ];
 
-const otherSkills = [
-  { name: "Responsive Design", icon: <Smartphone /> },
-  { name: "Performance Optimization", icon: <Cpu /> },
-  { name: "Web Accessibility", icon: <Globe /> },
-  { name: "Cloud Services", icon: <Cloud /> },
-  { name: "CLI Tools", icon: <Terminal /> },
-  { name: "Component Libraries", icon: <Layers /> },
+const additionalCapabilities = [
+  { name: "Responsive", icon: <Smartphone size={14} /> },
+  { name: "Performance", icon: <Cpu size={14} /> },
+  { name: "Accessibility", icon: <Globe size={14} /> },
+  { name: "Cloud", icon: <Cloud size={14} /> },
+  { name: "CLI Tools", icon: <Terminal size={14} /> },
+  { name: "Libraries", icon: <Layers size={14} /> },
 ];
 
+const colorMap: any = {
+  blue: "bg-blue-500",
+  pink: "bg-pink-500",
+  green: "bg-emerald-500",
+  orange: "bg-orange-500",
+};
+
 export default function Skills() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: "spring" as const, stiffness: 100 },
-    },
-  };
-
   return (
-    <section id="skills" ref={ref} className="py-24 px-6 bg-card">
-      <div className="container mx-auto max-w-6xl">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            Technical Expertise
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Skills & <span className="text-primary">Technologies</span>
-          </h2>
-          <p className="text-xl text-muted max-w-3xl mx-auto">
-            A comprehensive toolkit for building modern, scalable, and user‑friendly digital products.
-          </p>
-        </motion.div>
-
-        {/* Skill categories */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
-        >
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              whileHover={{ y: -5 }}
-              className="bg-background border border-border rounded-2xl p-6 hover:border-primary/30 transition-all"
-            >
-              <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${category.color} mb-4`}>
-                <div className="text-white">{category.icon}</div>
-              </div>
-              <h3 className="text-xl font-bold mb-4">{category.title}</h3>
-              <div className="space-y-3">
-                {category.skills.map((skill, skillIndex) => (
-                  <div key={skillIndex} className="space-y-1">
-                    <div className="flex justify-between text-sm">
-                      <span>{skill.name}</span>
-                      <span className="text-muted">{skill.level}%</span>
-                    </div>
-                    <div className="h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
-                        transition={{ duration: 1, delay: 0.2 + index * 0.1 + skillIndex * 0.05 }}
-                        className={`h-full rounded-full bg-gradient-to-r ${category.color}`}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Other skills */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mb-16"
-        >
-          <h3 className="text-2xl font-bold text-center mb-8">Additional Capabilities</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-            {otherSkills.map((skill, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: 0.6 + index * 0.05 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-background border border-border rounded-xl p-4 flex flex-col items-center text-center hover:border-primary/30 transition-all"
-              >
-                <div className="text-primary mb-2">{skill.icon}</div>
-                <div className="text-sm font-medium">{skill.name}</div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Developer mindset */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ delay: 0.8 }}
-          className="bg-gradient-to-r from-primary/5 to-secondary/5 border border-primary/20 rounded-2xl p-8"
-        >
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h4 className="text-xl font-bold mb-3">Continuous Learning</h4>
-              <p className="text-muted">
-                I stay updated with the latest technologies and best practices through courses, conferences, and hands‑on experimentation.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-xl font-bold mb-3">Clean Code Advocate</h4>
-              <p className="text-muted">
-                I write maintainable, well‑documented code following industry standards and design patterns.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-xl font-bold mb-3">Collaborative Approach</h4>
-              <p className="text-muted">
-                I thrive in cross‑functional teams, communicating effectively with designers, product managers, and other developers.
-              </p>
-            </div>
-          </div>
-        </motion.div>
+    <div className="w-full max-w-5xl mx-auto px-4 flex flex-col justify-center min-h-[85vh]">
+      {/* Header - Compact */}
+      <div className="text-center mb-6">
+        <div className="inline-block px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[8px] uppercase tracking-widest mb-2">
+          Technical Expertise
+        </div>
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          Skills & <span className="text-blue-500">Technologies</span>
+        </h2>
       </div>
-    </section>
+
+      {/* Main Skill Cards - High Density */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
+        {skillCategories.map((category, i) => (
+          <div key={i} className="bg-[#0a0a0a]/80 backdrop-blur-sm border border-white/5 rounded-2xl p-4 transition-all">
+            <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-3 text-white ${colorMap[category.color]}`}>
+              {category.icon}
+            </div>
+            <h3 className="text-[12px] font-bold text-white mb-4 tracking-tight">{category.title}</h3>
+            <div className="space-y-3">
+              {category.skills.map((skill, si) => (
+                <div key={si}>
+                  <div className="flex justify-between text-[9px] text-zinc-500 mb-1">
+                    <span>{skill.name}</span>
+                    <span>{skill.level}%</span>
+                  </div>
+                  <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${skill.level}%` }}
+                      transition={{ duration: 1 }}
+                      className={`h-full ${colorMap[category.color]}`}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Additional Capabilities - Compact Grid */}
+      <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 mb-8">
+        {additionalCapabilities.map((item, i) => (
+          <div key={i} className="bg-[#0a0a0a]/60 border border-white/5 p-2 rounded-xl flex items-center gap-2 hover:bg-white/5 transition-all">
+            <div className="text-blue-500">{item.icon}</div>
+            <span className="text-[8px] text-zinc-400 font-bold uppercase tracking-tighter">{item.name}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Bottom Philosophy Cards - Slim Layout */}
+      <div className="bg-[#0a0a0a]/40 border border-white/5 rounded-2xl p-5 grid md:grid-cols-3 gap-6">
+        {[
+          { title: "Continuous Learning", desc: "Staying updated with the latest tech through experimentation." },
+          { title: "Clean Code", desc: "Writing maintainable, well-documented code using patterns." },
+          { title: "Collaborative", desc: "Thriving in cross-functional teams with clear communication." }
+        ].map((p, i) => (
+          <div key={i}>
+            <h4 className="text-white font-bold mb-1 text-[10px] uppercase tracking-wider">{p.title}</h4>
+            <p className="text-zinc-500 text-[9px] leading-snug">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

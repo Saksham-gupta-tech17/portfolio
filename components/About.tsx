@@ -94,7 +94,7 @@ export default function About() {
               <div className="relative bg-card/60 backdrop-blur-xl border border-border/50 rounded-2xl p-8">
                 <h3 className="text-2xl font-bold mb-4">My Journey</h3>
                 <p className="text-muted mb-6">
-                  I'm Saksham Gupta. Starting as a self‑taught designer, I've spent over three years bridging the gap between aesthetics and functionality.
+                  Starting as a self‑taught designer, I've spent over three years bridging the gap between aesthetics and functionality.
                   Today, I work at the intersection of design and development, creating products that are both beautiful and robust.
                 </p>
                 <div className="flex items-center gap-4">

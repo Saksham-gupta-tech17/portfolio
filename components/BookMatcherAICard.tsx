@@ -1,17 +1,25 @@
 "use client";
 
 import { ExternalLink, Eye, Code } from "lucide-react";
+import { projects as allProjects } from './Projects'; // Import all projects to get the type
 
 interface BookMatcherAICardProps {
   className?: string;
   variant?: "default" | "compact";
+  // Add a prop to pass project data
+  project: typeof allProjects[0]; // Type based on the first element of the projects array
 }
 
 export default function BookMatcherAICard({ 
   className = "",
-  variant = "default" 
+  variant = "default",
+  project // Now project is a required prop
 }: BookMatcherAICardProps) {
-  const project = {
+  // Removed the hardcoded default project.
+  // The component now expects a 'project' prop to be passed.
+  // If it were to have a default, it would be handled by the parent.
+  // For the purpose of the OverlayUI, we will always pass a project.
+  /*
     title: "Book Matcher AI",
     description: "An AI-powered tool that recommends books based on user preferences.",
     tags: ["AI/ML", "Next.js", "TypeScript", "Tailwind", "Vercel"],

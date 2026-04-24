@@ -1,238 +1,166 @@
 "use client";
-
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { ExternalLink, Eye, Code, Sparkles, GitBranch } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLink, Code, Sparkles, Globe } from "lucide-react"; 
 
 const projects = [
-  {
-    title: "Book Matcher AI",
-    description: "An AI-powered tool that recommends books based on user preferences.",
-    tags: ["AI/ML", "Next.js", "TypeScript", "Tailwind", "Vercel"],
-    imageColor: "from-red-500 to-orange-500",
-    liveUrl: "https://book-matcher-ai-git-main-saksham-gupta-tech17s-projects.vercel.app/",
-    githubUrl: "#",
-    featured: true,
+  { 
+    title: "Book Matcher AI", 
+    category: "Featured", 
+    description: "An AI-powered tool that recommends books based on user preferences.", 
+    tags: ["AI/ML", "Next.js"], 
+    imageColor: "from-orange-900/40 to-orange-800/20", 
+    liveUrl: "https://book-matcher-ai-git-main-saksham-gupta-tech17s-projects.vercel.app/", 
+    githubUrl: "#" 
   },
-  {
-    title: "LocalMind",
-    description: "A Privacy-First AI Knowledge Retrieval System. Built a full-stack RAG (Retrieval-Augmented Generation) platform that allows users to chat with their private PDF documents. It uses a sliding-window chunking strategy to ground LLM responses in local context, preventing hallucinations.",
-    tags: ["React", "Node.js", "Tailwind CSS", "Gemini AI", "Framer Motion"],
-    imageColor: "from-purple-500 to-indigo-500",
-    liveUrl: "#",
-    githubUrl: "https://github.com/Saksham-gupta-tech17/local_mind",
-    featured: true,
-    aiPowered: true,
+  { 
+    title: "LocalMind", 
+    category: "Fullstack", 
+    description: "Privacy-First RAG platform for PDF chat.", 
+    tags: ["React", "Gemini AI"], 
+    imageColor: "from-indigo-900/40 to-indigo-800/20", 
+    liveUrl: "#", 
+    githubUrl: "https://github.com/Saksham-gupta-tech17/local_mind", 
+    isAi: true 
   },
-  {
-    title: "EcoTrack Dashboard",
-    description: "Real‑time sustainability analytics platform with interactive visualizations for environmental impact tracking.",
-    tags: ["Next.js", "D3.js", "Node.js", "PostgreSQL", "Chart.js"],
-    imageColor: "from-green-500 to-emerald-500",
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: true,
+  { 
+    title: "EcoTrack Dashboard", 
+    category: "Frontend", 
+    description: "Real-time sustainability analytics.", 
+    tags: ["D3.js", "Node.js"], 
+    imageColor: "from-emerald-900/40 to-emerald-800/20", 
+    liveUrl: "#", 
+    githubUrl: "#" 
   },
-  {
-    title: "Artisan Marketplace",
-    description: "A curated e‑commerce platform connecting local artisans with global customers. Focus on UX and performance.",
-    tags: ["Next.js", "Stripe", "MongoDB", "Cloudinary", "Redis"],
-    imageColor: "from-amber-500 to-orange-500",
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: false,
+  { 
+    title: "Artisan Marketplace", 
+    category: "Fullstack", 
+    description: "E-commerce for local artisans.", 
+    tags: ["Stripe", "MongoDB"], 
+    imageColor: "from-amber-900/40 to-amber-800/20", 
+    liveUrl: "#", 
+    githubUrl: "#" 
   },
-  {
-    title: "Mindful Meditation App",
-    description: "A mobile‑first meditation application with personalized sessions, progress tracking, and calming UI.",
-    tags: ["React Native", "Expo", "Firebase", "Lottie", "Redux"],
-    imageColor: "from-purple-500 to-violet-500",
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: false,
+  { 
+    title: "Mindful Meditation", 
+    category: "Mobile", 
+    description: "Calming UI for mental wellness.", 
+    tags: ["React Native", "Expo"], 
+    imageColor: "from-blue-900/40 to-blue-800/20", 
+    liveUrl: "#", 
+    githubUrl: "#" 
   },
-  {
-    title: "DevCollab Platform",
-    description: "Collaboration tool for developers with real‑time code editing, project management, and team communication.",
-    tags: ["Socket.io", "React", "Express", "MongoDB", "Docker"],
-    imageColor: "from-rose-500 to-pink-500",
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: false,
-  },
+  { 
+    title: "DevCollab Platform", 
+    category: "Design", 
+    description: "Real-time code editing tool.", 
+    tags: ["Socket.io", "Docker"], 
+    imageColor: "from-rose-900/40 to-rose-800/20", 
+    liveUrl: "#", 
+    githubUrl: "#" 
+  }
 ];
 
-const filters = ["All", "Featured", "Frontend", "Fullstack", "Mobile", "Design"];
-
 export default function Projects() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeTab, setActiveTab] = useState("All");
+  const categories = ["All", "Featured", "Frontend", "Fullstack", "Mobile", "Design"];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: "spring" as const, stiffness: 100 },
-    },
-  };
-
-  const filteredProjects = activeFilter === "All" 
-    ? projects 
-    : activeFilter === "Featured" 
-    ? projects.filter(p => p.featured)
-    : projects;
+  const filteredProjects = projects.filter(p => activeTab === "All" || p.category === activeTab);
 
   return (
-    <section id="projects" ref={ref} className="py-24 px-6 bg-background">
-      <div className="container mx-auto max-w-6xl">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-            <Sparkles size={16} />
-            Selected Work
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Projects That <span className="text-primary">Make an Impact</span>
-          </h2>
-          <p className="text-xl text-muted max-w-3xl mx-auto mb-10">
-            A curated selection of my recent work—each project represents a unique challenge and solution.
-          </p>
-        </motion.div>
-
-        {/* Filter buttons */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
-        >
-          {filters.map((filter) => (
+    <div className="w-full max-w-5xl mx-auto px-4 flex flex-col justify-center">
+      {/* Header */}
+      <div className="text-center mb-4">
+        <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[8px] uppercase tracking-[0.2em] mb-2">
+          <Sparkles size={10} /> Selected Work
+        </div>
+        <h2 className="text-2xl md:text-4xl font-bold text-white mb-1">
+          Projects That <span className="text-blue-500">Make an Impact</span>
+        </h2>
+        
+        {/* Tabs */}
+        <div className="flex flex-wrap justify-center gap-1.5 mt-2">
+          {categories.map((cat) => (
             <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                activeFilter === filter
-                  ? "bg-primary text-white shadow-lg"
-                  : "bg-card border border-border hover:border-primary/50"
+              key={cat}
+              onClick={() => setActiveTab(cat)}
+              className={`px-3 py-1 rounded-full text-[9px] font-bold transition-all border uppercase tracking-wider ${
+                activeTab === cat 
+                ? "bg-blue-600 border-blue-600 text-white" 
+                : "bg-zinc-900/50 border-white/5 text-zinc-500 hover:border-white/20"
               }`}
             >
-              {filter}
+              {cat}
             </button>
           ))}
-        </motion.div>
+        </div>
+      </div>
 
-        {/* Projects grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {filteredProjects.map((project, index) => (
-            <motion.article
-              key={index}
-              variants={itemVariants}
-              whileHover={{ y: -10 }}
-              className="group relative bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all"
+      {/* Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <AnimatePresence mode="popLayout">
+          {filteredProjects.map((project) => (
+            <motion.div
+              layout
+              key={project.title}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="group flex flex-col bg-zinc-900/40 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden hover:border-blue-500/30 transition-all cursor-pointer"
+              onClick={() => project.liveUrl !== "#" && window.open(project.liveUrl, "_blank")}
             >
-              {/* Featured badge */}
-              {project.featured && (
-                <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-gradient-to-r from-primary to-secondary text-white text-xs font-bold rounded-full">
-                  Featured
-                </div>
-              )}
-
-              {/* Project image placeholder */}
-              <div className="h-48 relative overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.imageColor} opacity-20`} />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm flex items-center justify-center">
-                    <Code size={48} className="text-white/30" />
-                  </div>
-                </div>
+              {/* Card Image Area */}
+              <div className={`h-24 w-full bg-gradient-to-br ${project.imageColor} flex items-center justify-center relative`}>
+                 <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded-md bg-black/40 text-[7px] text-white/70 uppercase font-bold tracking-widest">{project.category}</div>
+                 <Code size={24} className="text-white/10 group-hover:scale-110 transition-transform" />
               </div>
 
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors flex items-center gap-3">
-                  {project.title}
-                  {project.aiPowered && (
-                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-500 text-xs font-medium border border-purple-500/20">
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
-                      </span>
-                      AI Powered
-                    </span>
-                  )}
-                </h3>
-                <p className="text-muted mb-5">
+              {/* Card Content Area */}
+              <div className="p-4 flex flex-col flex-grow">
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="text-xs font-bold text-white truncate">{project.title}</h3>
+                  {project.isAi && <span className="text-[6px] text-purple-400 border border-purple-500/20 px-1 py-0.5 rounded-full font-bold uppercase">AI</span>}
+                </div>
+                
+                <p className="text-zinc-500 text-[10px] line-clamp-2 mb-3 leading-tight opacity-80">
                   {project.description}
                 </p>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className="px-3 py-1 bg-background border border-border rounded-full text-xs"
-                    >
-                      {tag}
-                    </span>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {project.tags.map(tag => (
+                    <span key={tag} className="px-1.5 py-0.5 rounded bg-white/5 text-[7px] text-zinc-500 font-medium uppercase tracking-tighter">{tag}</span>
                   ))}
                 </div>
 
-                {/* Actions */}
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-3">
-                    <a
-                      href={project.liveUrl}
-                      target={project.liveUrl !== "#" ? "_blank" : undefined}
-                      rel={project.liveUrl !== "#" ? "noopener noreferrer" : undefined}
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-full text-sm font-medium hover:bg-primary-dark transition-colors"
+                {/* Buttons Section */}
+                <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-3">
+                   <div className="flex gap-1.5">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if(project.liveUrl !== "#") window.open(project.liveUrl, "_blank");
+                      }}
+                      className="flex items-center gap-1 px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-full text-[8px] font-bold uppercase tracking-wider transition-all"
                     >
-                      <Eye size={16} />
-                      Live Demo
-                    </a>
-                    <a
-                      href={project.githubUrl}
-                      target={project.githubUrl !== "#" ? "_blank" : undefined}
-                      rel={project.githubUrl !== "#" ? "noopener noreferrer" : undefined}
-                      className="inline-flex items-center gap-2 px-4 py-2 border border-border rounded-full text-sm font-medium hover:border-primary hover:text-primary transition-colors"
+                      <Globe size={9} /> Live
+                    </button>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if(project.githubUrl !== "#") window.open(project.githubUrl, "_blank");
+                      }}
+                      className="flex items-center gap-1 px-2.5 py-1 bg-white/5 hover:bg-white/10 text-white rounded-full text-[8px] font-bold border border-white/5 transition-all"
                     >
-                      <GitBranch size={16} />
-                      Code
-                    </a>
-                  </div>
-                  <ExternalLink size={18} className="text-muted group-hover:text-primary transition-colors" />
+                      <Code size={9} /> Code
+                    </button>
+                   </div>
+                   <ExternalLink size={10} className="text-zinc-700 group-hover:text-blue-500 transition-colors" />
                 </div>
               </div>
-
-              {/* Hover effect */}
-              <div className="absolute inset-0 border-2 border-primary rounded-2xl opacity-0 group-hover:opacity-30 transition-opacity pointer-events-none" />
-            </motion.article>
+            </motion.div>
           ))}
-        </motion.div>
-
+        </AnimatePresence>
       </div>
-    </section>
+    </div>
   );
 }

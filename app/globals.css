@@ -1,57 +1,49 @@
-
 @import "tailwindcss";
 
-@theme {
-  --color-background: #020202;
-  --color-foreground: #ffffff;
-}
-
-:root {
-  --background: #020202;
-  --foreground: #ffffff;
-}
-
-body {
-  background-color: #020202 !important;
-  color: white !important;
+html, body {
+  background: #020202;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  /* Ensure smooth scrolling across browsers */
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Scrollytelling Layering */
+/* Background canvas fix */
 canvas {
   position: fixed !important;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
   z-index: 0 !important;
   pointer-events: none;
 }
 
-section {
-  background: transparent !important;
+.scroll-section {
   position: relative;
-  z-index: 10;
+  width: 100%;
+  pointer-events: none;
 }
 
-/* Glassmorphism Utility */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+/* Allow interaction only with content */
+.content-wrapper {
+  pointer-events: auto;
+  width: 100%;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
+/* Fix Hero z-index and spacing */
+#home {
+  z-index: 5;
 }
-::-webkit-scrollbar-track {
-  background: #020202;
-}
-::-webkit-scrollbar-thumb {
-  background: #1e3a8a;
-  border-radius: 10px;
+
+/* Prevent layout shifts on mobile */
+@media (max-width: 768px) {
+  .sticky {
+    position: relative !important;
+    height: auto !important;
+    padding: 80px 0;
+  }
+  .scroll-section {
+    min-height: auto !important;
+  }
 }

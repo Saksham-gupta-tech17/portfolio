@@ -5,19 +5,7 @@ export default function Navbar() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      
-      // We target the center of the section height so the scrollytelling 
-      // animations have reached their "Active" state.
-      const sectionHeight = element.offsetHeight;
-      const centerOfSection = elementPosition + (sectionHeight / 3);
-
-      window.scrollTo({
-        top: id === 'home' ? 0 : centerOfSection,
-        behavior: "smooth"
-      });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 

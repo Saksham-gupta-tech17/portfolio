@@ -6,13 +6,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useScrollStore } from "@/store/useScrollStore";
 import { Sparkles, ExternalLink } from "lucide-react";
 
-// Components
 import BackgroundEngine from "@/components/BackgroundEngine";
 import Philosophy from "@/components/Philosophy";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
-import Footer from "@/components/Footer"; // Import Footer
+import Footer from "@/components/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,25 +51,58 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <main ref={containerRef} className="relative bg-[#020202] text-white">
+    <main ref={containerRef} className="relative bg-[#020202] text-white overflow-x-hidden">
       <BackgroundEngine />
 
-      {/* HERO */}
-      <section id="home" className="h-[130vh] relative z-10 px-4">
-        <div className="sticky top-0 h-screen flex flex-col items-center justify-center pt-10">
-          <motion.div style={{ opacity: heroOpacity, scale: heroScale }} className="w-full max-w-5xl mx-auto text-center flex flex-col items-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/5 border border-blue-500/10 text-blue-400 text-[10px] font-medium tracking-wide mb-6 uppercase"><Sparkles size={12} /> Modern Developer & Designer</div>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-[1.05]">Crafting Digital <br /> Experiences That <span className="bg-gradient-to-br from-blue-400 to-indigo-500 bg-clip-text text-transparent italic font-serif">Inspire</span></h1>
-            <p className="text-zinc-500 text-sm md:text-base max-w-xl mx-auto mb-10 leading-relaxed">I'm <span className="text-white font-medium uppercase font-bold">saksham gupta</span>, a creative developer building beautiful, performant products.</p>
-            <div className="flex items-center gap-4 mb-16">
-              <button onClick={() => document.getElementById('projects')?.scrollIntoView({behavior: 'smooth'})} className="px-8 py-3 bg-blue-600 text-white rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-blue-500/20 flex items-center gap-2 cursor-pointer">View My Work <ExternalLink size={14} /></button>
-              <button onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})} className="px-8 py-3 bg-transparent border border-white/5 text-white/90 rounded-full text-[10px] font-bold uppercase tracking-widest cursor-pointer">Get in Touch</button>
+      {/* HERO SECTION */}
+      <section id="home" className="h-[130vh] relative z-10 px-4 md:px-6">
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-center pt-10 md:pt-0">
+          <motion.div 
+            style={{ opacity: heroOpacity, scale: heroScale }} 
+            className="w-full max-w-5xl mx-auto text-center flex flex-col items-center"
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/5 border border-blue-500/10 text-blue-400 text-[8px] md:text-[10px] font-medium tracking-wide mb-4 md:mb-6 uppercase">
+              <Sparkles size={12} /> Modern Developer & Designer
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-4xl px-4">
-              {[{ label: "Projects", value: "10+" }, { label: "Experience", value: "3+ Yrs" }, { label: "Satisfaction", value: "100%" }, { label: "Passion", value: "∞" }].map((stat, i) => (
-                <div key={i} className="bg-zinc-900/20 border border-white/5 px-6 py-5 rounded-2xl flex flex-col items-center backdrop-blur-sm">
-                  <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-[9px] text-zinc-600 uppercase tracking-widest font-medium text-center">{stat.label}</div>
+
+            {/* Title - Responsive Sizes */}
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 md:mb-6 tracking-tight leading-[1.1]">
+              Crafting Digital <br className="hidden sm:block" />
+              Experiences That <span className="bg-gradient-to-br from-blue-400 to-indigo-500 bg-clip-text text-transparent italic font-serif">Inspire</span>
+            </h1>
+
+            {/* Subtext - Responsive Width */}
+            <p className="text-zinc-500 text-xs md:text-base max-w-[280px] sm:max-w-xl mx-auto mb-8 md:mb-10 leading-relaxed">
+              I'm <span className="text-white font-medium uppercase font-bold">saksham gupta</span>, a creative developer building beautiful, performant products.
+            </p>
+
+            {/* Buttons - Stack on small mobile, row on larger */}
+            <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-4 mb-12 md:mb-16 w-full sm:w-auto px-6 sm:px-0">
+              <button 
+                onClick={() => document.getElementById('projects')?.scrollIntoView({behavior: 'smooth'})} 
+                className="w-full sm:w-auto px-8 py-3 bg-blue-600 text-white rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                View My Work <ExternalLink size={14} />
+              </button>
+              <button 
+                onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})} 
+                className="w-full sm:w-auto px-8 py-3 bg-transparent border border-white/5 text-white/90 rounded-full text-[10px] font-bold uppercase tracking-widest cursor-pointer"
+              >
+                Get in Touch
+              </button>
+            </div>
+
+            {/* Stats - Grid 2x2 on mobile, 1x4 on desktop */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 w-full max-w-4xl px-4">
+              {[
+                { label: "Projects", value: "10+" }, 
+                { label: "Experience", value: "3+ Yrs" }, 
+                { label: "Satisfaction", value: "100%" }, 
+                { label: "Passion", value: "∞" }
+              ].map((stat, i) => (
+                <div key={i} className="bg-zinc-900/20 border border-white/5 px-4 py-4 md:px-6 md:py-5 rounded-2xl flex flex-col items-center backdrop-blur-sm">
+                  <div className="text-xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
+                  <div className="text-[8px] md:text-[9px] text-zinc-600 uppercase tracking-widest font-medium text-center">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -78,8 +110,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section id="about" className="h-[200vh] relative z-10">
+      {/* ABOUT / PHILOSOPHY */}
+      <section id="about" className="h-[200vh] relative z-10 px-4">
         <div className="sticky top-0 h-screen flex items-center justify-center pt-20">
           <motion.div style={{ opacity: philOpacity, scale: philScale }} className="w-full">
             <Philosophy />
@@ -88,7 +120,7 @@ export default function Home() {
       </section>
 
       {/* SKILLS */}
-      <section id="skills" className="h-[200vh] relative z-10">
+      <section id="skills" className="h-[200vh] relative z-10 px-4">
         <div className="sticky top-0 h-screen flex items-center justify-center pt-24 pb-10">
           <motion.div style={{ opacity: skillsOpacity, scale: skillsScale }} className="w-full">
             <Skills />
@@ -97,7 +129,7 @@ export default function Home() {
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" className="h-[280vh] relative z-10">
+      <section id="projects" className="h-[280vh] relative z-10 px-4">
         <div className="sticky top-0 h-screen flex items-center justify-center pt-28 pb-12">
           <motion.div style={{ opacity: projectsOpacity, scale: projectsScale }} className="w-full">
             <Projects />
@@ -106,11 +138,10 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="min-h-screen relative z-10 flex items-center justify-center py-24 bg-black/60 backdrop-blur-md">
+      <section id="contact" className="min-h-screen relative z-10 flex items-center justify-center py-20 px-4 bg-black/60 backdrop-blur-md">
         <Contact />
       </section>
 
-      {/* FOOTER */}
       <Footer />
     </main>
   );

@@ -1,33 +1,39 @@
 "use client";
-
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 interface WordRevealProps {
   text: string;
   className?: string;
-  delay?: number;
 }
 
-export default function WordReveal({ text, className = "", delay = 0 }: WordRevealProps) {
+export default function WordReveal({ text, className = "" }: WordRevealProps) {
   const words = text.split(" ");
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
+  // Explicitly typing as 'Variants' fixes the Vercel Type Error
+  const wordVariants: Variants = {
+    hidden: { 
+      y: "100%", 
+      opacity: 0 
+    },
     visible: {
+      y: 0,
       opacity: 1,
       transition: {
-        staggerChildren: 0.08,
-        delayChildren: delay,
+        type: "spring",
+        stiffness: 100,
+        damping: 20,
       },
     },
   };
 
-  const wordVariants = {
-    hidden: { y: "100%", opacity: 0 },
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
     visible: {
-      y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 100, damping: 20 },
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.2,
+      },
     },
   };
 
@@ -36,12 +42,18 @@ export default function WordReveal({ text, className = "", delay = 0 }: WordReve
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
-      className={`flex flex-wrap ${className}`}
+      viewport={{ once: true }}
+      className={`flex flex-wrap justify-center ${className}`}
     >
       {words.map((word, i) => (
-        <span key={i} className="overflow-hidden inline-block mr-[0.25em] align-bottom">
-          <motion.span variants={wordVariants} className="inline-block">
+        <span
+          key={i}
+          className="overflow-hidden inline-block mr-[0.25em] align-bottom"
+        >
+          <motion.span
+            variants={wordVariants}
+            className="inline-block"
+          >
             {word}
           </motion.span>
         </span>
